@@ -39,6 +39,8 @@ builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddScoped<AuthService>();
 
+builder.Services.AddScoped<BalanceService>();
+
 string jwtKey =
     builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException(
