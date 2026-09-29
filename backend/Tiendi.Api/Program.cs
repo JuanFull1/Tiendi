@@ -47,6 +47,7 @@ builder.Services.AddScoped<EstadisticasService>();
 
 builder.Services.AddScoped<BalanceService>();
 builder.Services.AddScoped<ProductosService>();
+builder.Services.AddScoped<InventarioService>();
 
 string jwtKey =
     builder.Configuration["Jwt:Key"]
