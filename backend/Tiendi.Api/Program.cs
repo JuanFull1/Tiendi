@@ -46,6 +46,7 @@ builder.Services.AddScoped<ComprasService>();
 builder.Services.AddScoped<EstadisticasService>();
 
 builder.Services.AddScoped<BalanceService>();
+builder.Services.AddScoped<ProductosService>();
 
 string jwtKey =
     builder.Configuration["Jwt:Key"]
@@ -103,6 +104,8 @@ if (app.Environment.IsDevelopment())
 await DbInitializer.SeedAdminAsync(app.Services);
 
 app.UseCors("Frontend");
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 

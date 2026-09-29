@@ -246,6 +246,7 @@ public partial class TiendiDbContext : DbContext
             entity.Property(e => e.Codigo).HasMaxLength(50);
             entity.Property(e => e.Costo).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Descripcion).HasMaxLength(300);
+            entity.Property(e => e.ImagenUrl).HasMaxLength(500);
             entity.Property(e => e.FechaCreacion).HasDefaultValueSql("(sysdatetime())", "DF_Productos_FechaCreacion");
             entity.Property(e => e.Nombre).HasMaxLength(150);
             entity.Property(e => e.PrecioVenta).HasColumnType("decimal(18, 2)");
