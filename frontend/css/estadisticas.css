@@ -1,0 +1,372 @@
+/* ========================================
+   ENCABEZADO
+======================================== */
+
+.estadisticas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.estadisticas-header h2 {
+    margin: 3px 0 5px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.estadisticas-header p {
+    margin: 0;
+    color: #6b7280;
+}
+
+.estadisticas-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #6366f1;
+}
+
+.estado-dashboard {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    color: #6b7280;
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+
+.estado-punto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+}
+
+
+/* ========================================
+   TARJETAS DE INDICADORES
+======================================== */
+
+.indicador-card {
+    position: relative;
+    height: 100%;
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #e9edf3;
+    border-radius: 16px;
+    box-shadow:
+        0 4px 16px rgba(15, 23, 42, 0.04);
+    overflow: hidden;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.indicador-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+.indicador-card::after {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    right: -35px;
+    top: -35px;
+    background:
+        rgba(99, 102, 241, 0.06);
+}
+
+.indicador-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.indicador-icono {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.icono-ventas {
+    color: #4f46e5;
+    background: #eef2ff;
+}
+
+.icono-cantidad {
+    color: #0284c7;
+    background: #e0f2fe;
+}
+
+.icono-promedio {
+    color: #059669;
+    background: #d1fae5;
+}
+
+.icono-mayor {
+    color: #d97706;
+    background: #fef3c7;
+}
+
+.indicador-etiqueta {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: #9ca3af;
+}
+
+.indicador-valor {
+    color: #111827;
+    font-size: 1.8rem;
+    line-height: 1.1;
+    font-weight: 750;
+    margin-bottom: 7px;
+}
+
+.indicador-titulo {
+    color: #4b5563;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.indicador-pie {
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+    color: #9ca3af;
+    font-size: 0.75rem;
+}
+
+
+/* ========================================
+   PANELES
+======================================== */
+
+.panel-estadistica {
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #e9edf3;
+    border-radius: 16px;
+    box-shadow:
+        0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.panel-header h5 {
+    margin: 3px 0 4px;
+    color: #111827;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.panel-header p {
+    margin: 0;
+    color: #9ca3af;
+    font-size: 0.8rem;
+}
+
+.panel-etiqueta {
+    color: #6366f1;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.panel-icono {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #6366f1;
+    background: #eef2ff;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+
+/* ========================================
+   GRÁFICOS
+======================================== */
+
+.grafico-contenedor {
+    position: relative;
+    height: 290px;
+    width: 100%;
+}
+
+.sin-datos {
+    height: 290px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+
+/* ========================================
+   TABLAS
+======================================== */
+
+.tabla-estadisticas {
+    margin-bottom: 0;
+}
+
+.tabla-estadisticas thead th {
+    padding: 11px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #9ca3af;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.tabla-estadisticas tbody td {
+    padding: 13px 10px;
+    border-color: #f1f5f9;
+    color: #4b5563;
+    font-size: 0.84rem;
+    vertical-align: middle;
+}
+
+.tabla-estadisticas tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.producto-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.producto-avatar {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 9px;
+    color: #4f46e5;
+    background: #eef2ff;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.ranking {
+    width: 27px;
+    height: 27px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.ranking-1 {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.ranking-2 {
+    color: #475569;
+    background: #e2e8f0;
+}
+
+.ranking-3 {
+    color: #9a3412;
+    background: #ffedd5;
+}
+
+.ranking-normal {
+    color: #6b7280;
+    background: #f3f4f6;
+}
+
+.badge-ventas {
+    display: inline-flex;
+    min-width: 32px;
+    justify-content: center;
+    padding: 4px 9px;
+    color: #4f46e5;
+    background: #eef2ff;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.fecha-tabla {
+    color: #374151;
+    font-weight: 500;
+}
+
+.tabla-vacia {
+    padding: 35px !important;
+    text-align: center;
+    color: #9ca3af !important;
+}
+
+
+/* ========================================
+   ERROR
+======================================== */
+
+#mensaje-error {
+    border: none;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+
+    .estadisticas-header {
+        flex-direction: column;
+    }
+
+    .indicador-valor {
+        font-size: 1.55rem;
+    }
+
+    .grafico-contenedor {
+        height: 250px;
+    }
+
+    .panel-estadistica {
+        padding: 18px;
+    }
+
+}
