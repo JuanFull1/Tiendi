@@ -43,6 +43,7 @@ builder.Services.AddScoped<ClientesService>();
 builder.Services.AddScoped<ProveedoresService>();
 
 builder.Services.AddScoped<ComprasService>();
+builder.Services.AddScoped<VentasService>();
 builder.Services.AddScoped<EstadisticasService>();
 
 builder.Services.AddScoped<BalanceService>();
