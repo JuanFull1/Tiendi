@@ -45,6 +45,8 @@ builder.Services.AddScoped<ProveedoresService>();
 builder.Services.AddScoped<ComprasService>();
 builder.Services.AddScoped<EstadisticasService>();
 
+builder.Services.AddScoped<BalanceService>();
+
 string jwtKey =
     builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException(
