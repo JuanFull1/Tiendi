@@ -15,6 +15,8 @@ public partial class Producto
 
     public string? Descripcion { get; set; }
 
+    public string? ImagenUrl { get; set; }
+
     public decimal Costo { get; set; }
 
     public decimal PrecioVenta { get; set; }

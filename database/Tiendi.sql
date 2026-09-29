@@ -53,6 +53,7 @@ CREATE TABLE Productos
     Codigo NVARCHAR(50) NULL,
     Nombre NVARCHAR(150) NOT NULL,
     Descripcion NVARCHAR(300) NULL,
+    ImagenUrl NVARCHAR(500) NULL,
     Costo DECIMAL(18,2) NOT NULL
         CONSTRAINT DF_Productos_Costo DEFAULT 0,
     PrecioVenta DECIMAL(18,2) NOT NULL,
