@@ -38,6 +38,12 @@ builder.Services.AddScoped<PasswordHasher<Usuario>>();
 builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<ClientesService>();
+
+builder.Services.AddScoped<ProveedoresService>();
+
+builder.Services.AddScoped<ComprasService>();
+builder.Services.AddScoped<EstadisticasService>();
 
 string jwtKey =
     builder.Configuration["Jwt:Key"]
