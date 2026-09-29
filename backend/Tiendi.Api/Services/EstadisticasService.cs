@@ -13,7 +13,6 @@ public class EstadisticasService
         _context = context;
     }
 
-    // RESUMEN GENERAL
     public async Task<EstadisticasResumenDto> ObtenerResumenAsync()
     {
         var ventas = _context.Ventas
@@ -25,7 +24,11 @@ public class EstadisticasService
             .SumAsync(v => (decimal?)v.Total) ?? 0;
 
         var promedioVenta = cantidadVentas > 0
-            ? totalVentas / cantidadVentas
+            ? Math.Round(
+                totalVentas / cantidadVentas,
+                2,
+                MidpointRounding.AwayFromZero
+            )
             : 0;
 
         var ventaMayor = await ventas
@@ -40,11 +43,14 @@ public class EstadisticasService
         };
     }
 
-    // PRODUCTOS MÁS VENDIDOS
-    public async Task<List<ProductoVendidoDto>> ObtenerProductosMasVendidosAsync()
+
+    public async Task<List<ProductoVendidoDto>>
+        ObtenerProductosMasVendidosAsync(int top)
     {
         var productos = await _context.DetalleVentas
-            .Where(d => d.IdVentaNavigation.Estado == "COMPLETADA")
+            .Where(
+                d => d.IdVentaNavigation.Estado == "COMPLETADA"
+            )
             .GroupBy(d => new
             {
                 d.IdProducto,
@@ -58,17 +64,40 @@ public class EstadisticasService
                 TotalVendido = g.Sum(x => x.Subtotal)
             })
             .OrderByDescending(x => x.CantidadVendida)
-            .Take(10)
+            .Take(top)
             .ToListAsync();
 
         return productos;
     }
 
-    // VENTAS AGRUPADAS POR FECHA
-    public async Task<List<VentasPorFechaDto>> ObtenerVentasPorFechaAsync()
+
+    public async Task<List<VentasPorFechaDto>>
+        ObtenerVentasPorFechaAsync(
+            DateTime? desde,
+            DateTime? hasta
+        )
     {
-        var ventas = await _context.Ventas
-            .Where(v => v.Estado == "COMPLETADA")
+        var ventas = _context.Ventas
+            .Where(v => v.Estado == "COMPLETADA");
+
+        if (desde.HasValue)
+        {
+            ventas = ventas.Where(
+                v => v.Fecha >= desde.Value.Date
+            );
+        }
+
+        if (hasta.HasValue)
+        {
+            var limiteHasta =
+                hasta.Value.Date.AddDays(1);
+
+            ventas = ventas.Where(
+                v => v.Fecha < limiteHasta
+            );
+        }
+
+        var resultado = await ventas
             .GroupBy(v => v.Fecha.Date)
             .Select(g => new VentasPorFechaDto
             {
@@ -79,6 +108,6 @@ public class EstadisticasService
             .OrderBy(x => x.Fecha)
             .ToListAsync();
 
-        return ventas;
+        return resultado;
     }
 }
