@@ -10,6 +10,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    // Event listener 
+    document
+        .getElementById("buscar")
+        .addEventListener("input", debounce(buscarClientes, 300));
+
     // Cargar clientes al iniciar
     await cargarClientes();
 });
@@ -32,6 +37,29 @@ async function cargarClientes() {
                 </td>
             </tr>
         `;
+    }
+}
+
+async function buscarClientes() {
+    const termino = document
+        .getElementById("buscar")
+        .value
+        .trim();
+
+    if (!termino) {
+        renderizarTabla(clientesCargados);
+        actualizarResumen(clientesCargados);
+        return;
+    }
+
+    try {
+        const resultados = await apiRequest(
+            `${API_CLIENTES}/buscar?termino=${encodeURIComponent(termino)}`
+        );
+
+        renderizarTabla(resultados ?? []);
+    } catch (error) {
+        console.error("Error al buscar clientes:", error);
     }
 }
 
@@ -92,4 +120,13 @@ function actualizarResumen(clientes) {
 
     document.getElementById("total-por-cobrar").textContent =
         "$0.00";
+}
+
+function debounce(fn, ms) {
+    let timeout;
+
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(...args), ms);
+    };
 }
