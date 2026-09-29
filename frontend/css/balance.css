@@ -1,0 +1,129 @@
+/* Estilos propios del módulo Balance */
+
+.balance-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.balance-card .card-header {
+    border-bottom: 1px solid #eef0f3;
+    padding: 16px 20px;
+    border-radius: 10px 10px 0 0;
+}
+
+.balance-card .card-header h5 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.periodo-etiqueta {
+    min-width: 190px;
+    text-align: center;
+}
+
+/* Tarjetas de resumen */
+
+.resumen-card {
+    border-left: 5px solid transparent;
+}
+
+.resumen-card .card-body {
+    padding: 20px 22px;
+}
+
+.resumen-titulo {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.resumen-valor {
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin: 6px 0 2px;
+    font-variant-numeric: tabular-nums;
+}
+
+.resumen-icono {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.resumen-ingresos {
+    border-left-color: #198754;
+}
+
+.resumen-ingresos .resumen-icono {
+    background-color: #d1e7dd;
+    color: #198754;
+}
+
+.resumen-gastos {
+    border-left-color: #dc3545;
+}
+
+.resumen-gastos .resumen-icono {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+.resumen-balance {
+    border-left-color: #0d6efd;
+}
+
+.resumen-balance .resumen-icono {
+    background-color: #cfe2ff;
+    color: #0d6efd;
+}
+
+.resumen-balance.negativo {
+    border-left-color: #dc3545;
+}
+
+.resumen-balance.negativo .resumen-icono {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+/* Tabla de gastos */
+
+#tabla-gastos td {
+    font-variant-numeric: tabular-nums;
+}
+
+.badge-categoria {
+    background-color: #f1f3f5;
+    color: #495057;
+    font-weight: 500;
+}
+
+/* Ingresos por método de pago */
+
+.metodo-item + .metodo-item {
+    margin-top: 16px;
+}
+
+.metodo-item .progress {
+    height: 8px;
+}
+
+/* Estado de carga */
+
+.cargando .resumen-valor {
+    opacity: 0.4;
+}
+
+/* La categoría es opcional: no marcarla en verde al validar */
+.was-validated #gasto-categoria:valid {
+    border-color: var(--bs-border-color);
+    --bs-form-select-bg-icon: none;
+    padding-right: 2.25rem;
+}

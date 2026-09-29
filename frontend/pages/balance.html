@@ -12,7 +12,13 @@
         rel="stylesheet"
     >
 
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/balance.css">
 </head>
 
 <body>
@@ -25,18 +31,276 @@
 
         <main class="content">
 
-            <div class="page-header">
-                <h2>Balance</h2>
+            <div class="page-header d-flex flex-wrap justify-content-between align-items-start gap-3">
+                <div>
+                    <h2>Balance</h2>
 
-                <p class="text-muted">
-                    Consulta de ingresos, gastos y balance del negocio.
-                </p>
+                    <p class="text-muted mb-0">
+                        Consulta de ingresos, gastos y balance del negocio.
+                    </p>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="ventas.html" class="btn btn-success">
+                        <i class="bi bi-cart-plus"></i>
+                        Nueva venta
+                    </a>
+
+                    <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalGasto"
+                    >
+                        <i class="bi bi-plus-lg"></i>
+                        Nuevo gasto
+                    </button>
+                </div>
             </div>
 
-            <div id="balance-content"></div>
+            <div id="balance-content">
+
+                <!-- Selector de periodo -->
+                <div class="card balance-card mb-4">
+                    <div class="card-body d-flex flex-wrap align-items-center gap-3">
+
+                        <div class="btn-group flex-wrap" role="group" aria-label="Periodo">
+                            <button type="button" class="btn btn-outline-primary" data-periodo="dia">Diario</button>
+                            <button type="button" class="btn btn-outline-primary" data-periodo="semana">Semanal</button>
+                            <button type="button" class="btn btn-outline-primary active" data-periodo="mes">Mensual</button>
+                            <button type="button" class="btn btn-outline-primary" data-periodo="anio">Anual</button>
+                            <button type="button" class="btn btn-outline-primary" data-periodo="personalizado">Personalizado</button>
+                        </div>
+
+                        <div id="navegacion-periodo" class="d-flex align-items-center gap-2 ms-lg-auto">
+                            <button type="button" id="btn-anterior" class="btn btn-light border" aria-label="Periodo anterior">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+
+                            <span id="etiqueta-periodo" class="fw-semibold periodo-etiqueta">—</span>
+
+                            <button type="button" id="btn-siguiente" class="btn btn-light border" aria-label="Periodo siguiente">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+
+                        <form id="form-personalizado" class="d-none align-items-center gap-2 ms-lg-auto flex-wrap">
+                            <label class="small text-muted" for="fecha-desde">Desde</label>
+                            <input type="date" id="fecha-desde" class="form-control form-control-sm w-auto" required>
+
+                            <label class="small text-muted" for="fecha-hasta">Hasta</label>
+                            <input type="date" id="fecha-hasta" class="form-control form-control-sm w-auto" required>
+
+                            <button type="submit" class="btn btn-primary btn-sm">Aplicar</button>
+                        </form>
+
+                    </div>
+                </div>
+
+                <div id="alerta-balance" class="alert alert-danger d-none" role="alert"></div>
+
+                <!-- Tarjetas de resumen -->
+                <div class="row g-3 mb-4">
+
+                    <div class="col-md-4">
+                        <div class="card balance-card resumen-card resumen-ingresos h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <span class="resumen-titulo">Ingresos</span>
+                                    <span class="resumen-icono"><i class="bi bi-arrow-down-left"></i></span>
+                                </div>
+                                <div id="total-ingresos" class="resumen-valor text-success">$0,00</div>
+                                <small id="detalle-ingresos" class="text-muted">0 ventas</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card balance-card resumen-card resumen-gastos h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <span class="resumen-titulo">Gastos</span>
+                                    <span class="resumen-icono"><i class="bi bi-arrow-up-right"></i></span>
+                                </div>
+                                <div id="total-gastos" class="resumen-valor text-danger">$0,00</div>
+                                <small id="detalle-gastos" class="text-muted">0 gastos</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div id="card-balance" class="card balance-card resumen-card resumen-balance h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <span class="resumen-titulo">Balance</span>
+                                    <span class="resumen-icono"><i class="bi bi-wallet2"></i></span>
+                                </div>
+                                <div id="total-balance" class="resumen-valor">$0,00</div>
+                                <small id="detalle-balance" class="text-muted">Ingresos − gastos</small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row g-3">
+
+                    <!-- Tabla de gastos -->
+                    <div class="col-lg-8">
+                        <div class="card balance-card h-100">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Gastos del periodo</h5>
+                                <span id="contador-gastos" class="badge text-bg-light border">0</span>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Descripción</th>
+                                            <th>Categoría</th>
+                                            <th class="d-none d-md-table-cell">Registrado por</th>
+                                            <th class="text-end">Monto</th>
+                                            <th class="text-end"><span class="visually-hidden">Acciones</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-gastos">
+                                        <tr>
+                                            <td colspan="6" class="text-center text-muted py-4">Cargando…</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ingresos por método de pago -->
+                    <div class="col-lg-4">
+                        <div class="card balance-card h-100">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Ingresos por método de pago</h5>
+                            </div>
+                            <div id="lista-metodos" class="card-body">
+                                <p class="text-muted mb-0">Cargando…</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
 
         </main>
 
+    </div>
+
+    <!-- Modal: nuevo gasto -->
+    <div class="modal fade" id="modalGasto" tabindex="-1" aria-labelledby="modalGastoTitulo" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="form-gasto" class="modal-content" novalidate>
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalGastoTitulo">Nuevo gasto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div id="alerta-gasto" class="alert alert-danger d-none" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label for="gasto-descripcion" class="form-label">Descripción</label>
+                        <input
+                            type="text"
+                            id="gasto-descripcion"
+                            class="form-control"
+                            maxlength="250"
+                            placeholder="Ej.: Pago de luz de septiembre"
+                            required
+                        >
+                        <div class="invalid-feedback">Escribe una descripción.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gasto-categoria" class="form-label">Categoría</label>
+                        <select id="gasto-categoria" class="form-select">
+                            <option value="">Sin categoría</option>
+                            <option>Arriendo</option>
+                            <option>Servicios básicos</option>
+                            <option>Nómina</option>
+                            <option>Proveedores</option>
+                            <option>Transporte</option>
+                            <option>Mantenimiento</option>
+                            <option>Impuestos</option>
+                            <option>Otros</option>
+                        </select>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="gasto-monto" class="form-label">Monto</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">$</span>
+                                <input
+                                    type="number"
+                                    id="gasto-monto"
+                                    class="form-control"
+                                    min="0.01"
+                                    step="0.01"
+                                    placeholder="0.00"
+                                    required
+                                >
+                                <div class="invalid-feedback">El monto debe ser mayor a 0.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="gasto-fecha" class="form-label">Fecha</label>
+                            <input type="date" id="gasto-fecha" class="form-control" required>
+                            <div class="invalid-feedback">Elige una fecha que no sea futura.</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="btn-guardar-gasto" class="btn btn-danger">Guardar gasto</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: confirmar anulación -->
+    <div class="modal fade" id="modalAnular" tabindex="-1" aria-labelledby="modalAnularTitulo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAnularTitulo">Anular gasto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Seguro que quieres anular <strong id="anular-descripcion"></strong>?
+                    Dejará de contarse en el balance.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btn-confirmar-anular" class="btn btn-danger">Anular</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aviso breve -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast-balance" class="toast text-bg-success border-0" role="status" aria-live="polite" aria-atomic="true">
+            <div class="d-flex">
+                <div id="toast-mensaje" class="toast-body"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+            </div>
+        </div>
     </div>
 
     <script src="../js/services/auth.js"></script>
