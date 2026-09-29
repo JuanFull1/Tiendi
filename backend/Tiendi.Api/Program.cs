@@ -39,6 +39,9 @@ builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddScoped<AuthService>();
 
+builder.Services.AddScoped<ProveedoresService>();
+
+builder.Services.AddScoped<ComprasService>();
 builder.Services.AddScoped<EstadisticasService>();
 
 string jwtKey =
