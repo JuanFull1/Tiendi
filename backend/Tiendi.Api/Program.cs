@@ -38,6 +38,7 @@ builder.Services.AddScoped<PasswordHasher<Usuario>>();
 builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<ClientesService>();
 
 builder.Services.AddScoped<ProveedoresService>();
 
