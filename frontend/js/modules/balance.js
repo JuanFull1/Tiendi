@@ -192,11 +192,15 @@
         document.getElementById("detalle-ingresos").textContent =
             plural(resumen.cantidadVentas, "venta", "ventas");
 
-        document.getElementById("total-gastos").textContent =
-            moneda.format(resumen.totalGastos);
+        const totalEgresos =
+         resumen.totalGastos + resumen.totalCompras;
 
-        document.getElementById("detalle-gastos").textContent =
-            plural(resumen.cantidadGastos, "gasto", "gastos");
+          document.getElementById("total-gastos").textContent =
+          moneda.format(totalEgresos);
+
+          document.getElementById("detalle-gastos").textContent =
+           `${plural(resumen.cantidadGastos, "gasto", "gastos")} + ` +
+           `${plural(resumen.cantidadCompras, "compra", "compras")}`;
 
         const balance = resumen.balance;
         const valor = document.getElementById("total-balance");
@@ -210,7 +214,7 @@
         document.getElementById("detalle-balance").textContent =
             balance < 0
                 ? "Los gastos superan a los ingresos"
-                : "Ingresos − gastos";
+                : "Ingresos − gastos − compras";
 
         pintarMetodos(resumen.ingresosPorMetodoPago, resumen.totalIngresos);
     }

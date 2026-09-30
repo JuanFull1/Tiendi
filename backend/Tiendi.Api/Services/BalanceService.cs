@@ -8,6 +8,7 @@ namespace Tiendi.Api.Services;
 public class BalanceService
 {
     private const string VentaCompletada = "COMPLETADA";
+    private const string CompraCompletada = "COMPLETADA";
 
     private readonly TiendiDbContext _context;
 
@@ -38,6 +39,13 @@ public class BalanceService
                 g.Fecha < finExclusivo
             );
 
+        IQueryable<Compra> compras = _context.Compras
+            .Where(c =>
+                c.Estado == CompraCompletada &&
+                c.Fecha >= inicio &&
+                c.Fecha < finExclusivo
+            );
+
         decimal totalIngresos =
             await ventas.SumAsync(v => v.Total);
 
@@ -49,6 +57,12 @@ public class BalanceService
 
         int cantidadGastos =
             await gastos.CountAsync();
+
+        decimal totalCompras =
+            await compras.SumAsync(c => c.Total);
+
+        int cantidadCompras =
+            await compras.CountAsync();
 
         List<IngresoPorMetodoDto> porMetodo = await _context.Pagos
             .Where(p =>
@@ -73,7 +87,9 @@ public class BalanceService
             CantidadVentas = cantidadVentas,
             TotalGastos = totalGastos,
             CantidadGastos = cantidadGastos,
-            Balance = totalIngresos - totalGastos,
+            TotalCompras = totalCompras,
+            CantidadCompras = cantidadCompras,
+            Balance = totalIngresos - totalGastos - totalCompras,
             IngresosPorMetodoPago = porMetodo
         };
     }
@@ -126,12 +142,16 @@ public class BalanceService
 
         if (descripcion.Length > 250)
         {
-            throw new ArgumentException("La descripción no puede superar 250 caracteres.");
+            throw new ArgumentException(
+                "La descripción no puede superar 250 caracteres."
+            );
         }
 
         if (categoria is not null && categoria.Length > 100)
         {
-            throw new ArgumentException("La categoría no puede superar 100 caracteres.");
+            throw new ArgumentException(
+                "La categoría no puede superar 100 caracteres."
+            );
         }
 
         if (dto.Monto <= 0)
@@ -144,14 +164,17 @@ public class BalanceService
         DateTime fecha = dto.Fecha ?? ahora;
 
         // Si solo se eligió el día de hoy (sin hora), se guarda la hora actual.
-        if (fecha.Date == ahora.Date && fecha.TimeOfDay == TimeSpan.Zero)
+        if (fecha.Date == ahora.Date &&
+            fecha.TimeOfDay == TimeSpan.Zero)
         {
             fecha = ahora;
         }
 
         if (fecha.Date > ahora.Date)
         {
-            throw new ArgumentException("La fecha del gasto no puede ser futura.");
+            throw new ArgumentException(
+                "La fecha del gasto no puede ser futura."
+            );
         }
 
         var gasto = new Gasto
@@ -168,7 +191,8 @@ public class BalanceService
 
         await _context.SaveChangesAsync();
 
-        Usuario? usuario = await _context.Usuarios.FindAsync(idUsuario);
+        Usuario? usuario =
+            await _context.Usuarios.FindAsync(idUsuario);
 
         return new GastoDto
         {
@@ -186,7 +210,9 @@ public class BalanceService
     public async Task<bool> AnularGastoAsync(long idGasto)
     {
         Gasto? gasto = await _context.Gastos
-            .FirstOrDefaultAsync(g => g.IdGasto == idGasto && g.Activo);
+            .FirstOrDefaultAsync(
+                g => g.IdGasto == idGasto && g.Activo
+            );
 
         if (gasto is null)
         {
@@ -201,16 +227,22 @@ public class BalanceService
     }
 
     // Por defecto: desde el día 1 del mes actual hasta hoy.
-    // "hasta" incluye todo ese día, por eso se devuelve el día siguiente como límite.
-    private static (DateTime inicio, DateTime finExclusivo) NormalizarPeriodo(
-        DateTime? desde,
-        DateTime? hasta
-    )
+    // "hasta" incluye todo ese día, por eso se devuelve
+    // el día siguiente como límite.
+    private static (DateTime inicio, DateTime finExclusivo)
+        NormalizarPeriodo(
+            DateTime? desde,
+            DateTime? hasta
+        )
     {
         DateTime hoy = DateTime.Today;
 
         DateTime inicio =
-            (desde ?? new DateTime(hoy.Year, hoy.Month, 1)).Date;
+            (desde ?? new DateTime(
+                hoy.Year,
+                hoy.Month,
+                1
+            )).Date;
 
         DateTime fin =
             (hasta ?? hoy).Date;
