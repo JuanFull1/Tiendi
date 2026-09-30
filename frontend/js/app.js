@@ -1,5 +1,12 @@
+// Pantalla de inicio.
+// El estado de la API solo se muestra si la página tiene el elemento #api-status
+// y está cargada la función getApiStatus(); si no, no se hace nada.
 document.addEventListener("DOMContentLoaded", async () => {
     const status = document.getElementById("api-status");
+
+    if (!status || typeof getApiStatus !== "function") {
+        return;
+    }
 
     try {
         const data = await getApiStatus();
