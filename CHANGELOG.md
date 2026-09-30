@@ -23,4 +23,3 @@ Primera versión estable de Tiendi, preparada en la rama `release/1.0.0`.
 
 - Los estilos de la pantalla de inicio de sesión estaban dentro de un `@media` y no se aplicaban en computadoras de escritorio.
 - La página de Inicio mostraba el error `Cannot set properties of null` en la consola por buscar un elemento `#api-status` que no existe.
-- No se podía registrar ni editar un cliente sin correo: el formulario enviaba `""` y la API respondía 400.
