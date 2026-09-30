@@ -14,6 +14,10 @@ public class BalanceResumenDto
 
     public int CantidadGastos { get; set; }
 
+    public decimal TotalCompras { get; set; }
+
+    public int CantidadCompras { get; set; }
+
     public decimal Balance { get; set; }
 
     public List<IngresoPorMetodoDto> IngresosPorMetodoPago { get; set; } = new();
