@@ -98,6 +98,8 @@ body {
     .content {
         padding: 20px;
     }
+}
+
 .login-body {
     min-height: 100vh;
     background-color: #f5f6f8;
@@ -116,10 +118,4 @@ body {
     border: none;
     border-radius: 12px;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
-}
-
-
-
-
-
 }
