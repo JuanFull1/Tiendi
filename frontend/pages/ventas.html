@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vender | Tiendi</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+
+    <aside id="sidebar"></aside>
+
+    <div class="main-wrapper">
+
+        <header id="topbar"></header>
+
+        <main class="content">
+
+            <div class="page-header">
+                <h2>Vender</h2>
+
+                <p class="text-muted mb-0">
+                    Registro y gestión de ventas.
+                </p>
+            </div>
+
+            <div id="ventas-content" class="row g-4">
+
+                <div class="col-xl-8">
+                    <div class="card module-card h-100">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="mb-0">Nueva venta</h4>
+                                <span class="badge text-bg-primary-subtle text-primary">
+                                    Listo para registrar
+                                </span>
+                            </div>
+
+                            <div id="ventaAlert" class="alert alert-danger d-none"></div>
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+                                    <label class="form-label" for="clienteSelect">
+                                        Cliente
+                                    </label>
+
+                                    <select id="clienteSelect" class="form-select">
+                                        <option value="">Consumidor final / Sin cliente</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label" for="metodoPago">
+                                        Método de pago
+                                    </label>
+
+                                    <select id="metodoPago" class="form-select">
+                                        <option value="">Seleccionar método</option>
+                                        <option value="EFECTIVO">EFECTIVO</option>
+                                        <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                                        <option value="TARJETA">TARJETA</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label class="form-label" for="productoSelect">
+                                        Producto
+                                    </label>
+
+                                    <select id="productoSelect" class="form-select">
+                                        <option value="">Seleccionar producto</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="form-label" for="cantidadProducto">
+                                        Cantidad
+                                    </label>
+
+                                    <input
+                                        id="cantidadProducto"
+                                        type="number"
+                                        class="form-control"
+                                        min="1"
+                                        step="0.01"
+                                        value="1"
+                                    >
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label class="form-label" for="descuentoProducto">
+                                        Descuento
+                                    </label>
+
+                                    <input
+                                        id="descuentoProducto"
+                                        type="number"
+                                        class="form-control"
+                                        min="0"
+                                        step="0.01"
+                                        value="0"
+                                    >
+                                </div>
+
+                                <div class="col-md-2 d-flex align-items-end">
+                                    <button
+                                        id="btnAgregarProducto"
+                                        type="button"
+                                        class="btn btn-success w-100"
+                                    >
+                                        Agregar
+                                    </button>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between align-items-center small text-muted border rounded px-3 py-2 bg-light">
+                                        <span id="productoInfo">
+                                            Selecciona un producto para ver su stock y precio.
+                                        </span>
+
+                                        <span id="stockInfo" class="fw-semibold text-primary"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="mt-4">
+                                <h5 class="mb-3">Productos de la venta</h5>
+
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                                <th>Desc.</th>
+                                                <th>Subtotal</th>
+                                                <th class="text-end">Acción</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="detalleVentaBody">
+                                            <tr>
+                                                <td colspan="6" class="text-center text-muted py-4">
+                                                    Aún no has agregado productos.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-end mt-4">
+                                <div class="col-md-5">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-muted">Subtotal</span>
+                                        <strong id="subtotalVenta">$0.00</strong>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-muted">Descuento</span>
+                                        <strong id="descuentoVenta">$0.00</strong>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center border-top pt-2">
+                                        <span class="fw-semibold">Total</span>
+                                        <strong id="totalVenta" class="fs-5 text-primary">$0.00</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="descuentoGeneral">
+                                        Descuento general
+                                    </label>
+
+                                    <input
+                                        id="descuentoGeneral"
+                                        type="number"
+                                        class="form-control"
+                                        min="0"
+                                        step="0.01"
+                                        value="0"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end mt-4">
+                                <button
+                                    id="btnConfirmarVenta"
+                                    type="button"
+                                    class="btn btn-primary btn-lg"
+                                >
+                                    Confirmar venta
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4">
+                    <div class="card module-card h-100">
+                        <div class="card-body">
+                            <h4 class="mb-3">Ventas recientes</h4>
+
+                            <div id="ventasList" class="d-grid gap-2"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <script src="../js/services/auth.js"></script>
+    <script src="../js/shared/layout.js"></script>
+    <script src="../js/services/api.js"></script>
+    <script src="../js/modules/ventas.js"></script>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+</body>
+
+</html>

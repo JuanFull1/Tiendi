@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    background-color: #f5f6f8;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #212529;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 100vh;
+    background-color: #212529;
+    padding: 20px 15px;
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 5px 12px;
+    margin-bottom: 25px;
+}
+
+#sidebar .nav-link {
+    color: #ced4da;
+    padding: 11px 12px;
+    border-radius: 7px;
+    margin-bottom: 5px;
+    transition: 0.2s;
+}
+
+#sidebar .nav-link:hover {
+    color: white;
+    background-color: #343a40;
+}
+
+#sidebar .nav-link.active {
+    color: white;
+    background-color: #0d6efd;
+}
+
+.main-wrapper {
+    margin-left: 230px;
+    min-height: 100vh;
+}
+
+#topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#topbar .navbar {
+    min-height: 65px;
+}
+
+.content {
+    padding: 30px;
+}
+
+.page-header {
+    margin-bottom: 25px;
+}
+
+.page-header h2 {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.module-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.module-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12);
+}
+
+.module-card .card-body {
+    padding: 24px;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        width: 190px;
+    }
+
+    .main-wrapper {
+        margin-left: 190px;
+    }
+
+    .content {
+        padding: 20px;
+    }
+}
+
+.login-body {
+    min-height: 100vh;
+    background-color: #f5f6f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+.login-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
+}
