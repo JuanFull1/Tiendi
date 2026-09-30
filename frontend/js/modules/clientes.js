@@ -165,18 +165,13 @@ async function editarCliente(id) {
 async function guardarCliente() {
     const id = document.getElementById("cliente-id").value;
 
-    // Los campos opcionales vacíos se envían como null.
-    // Si se enviaba "" en el email, la validación [EmailAddress] respondía 400.
-    const valorOpcional = campo =>
-        document.getElementById(campo).value.trim() || null;
-
     const payload = {
         nombre: document.getElementById("nombre").value.trim(),
-        apellido: valorOpcional("apellido"),
-        identificacion: valorOpcional("identificacion"),
-        telefono: valorOpcional("telefono"),
-        email: valorOpcional("email"),
-        direccion: valorOpcional("direccion")
+        apellido: document.getElementById("apellido").value.trim(),
+        identificacion: document.getElementById("identificacion").value.trim(),
+        telefono: document.getElementById("telefono").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        direccion: document.getElementById("direccion").value.trim()
     };
 
     if (!payload.nombre) {
