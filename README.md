@@ -6,6 +6,20 @@ El proyecto permite gestionar información relacionada con productos, inventario
 
 Además del desarrollo de la aplicación, el proyecto tiene como objetivo aplicar buenas prácticas de control de versiones y trabajo colaborativo mediante Git, GitHub y el modelo GitFlow.
 
+## Versión actual
+
+**Tiendi v1.0.0**: primera versión estable, publicada el 29 de septiembre de 2026.
+
+| Versión | Fecha | Rama | Descripción |
+|---|---|---|---|
+| 1.0.0 | 2026-09-29 | `release/1.0.0` | Primera versión estable con los módulos Vender, Balance, Inventario, Estadísticas, Clientes y Proveedores. |
+
+El detalle de los cambios de cada versión se encuentra en:
+
+```text
+CHANGELOG.md
+```
+
 ## Objetivo
 
 Desarrollar una aplicación web sencilla para simular un entorno real de desarrollo colaborativo, utilizando Git como sistema de control de versiones y GitHub como plataforma de repositorio remoto.
@@ -282,6 +296,17 @@ Tiendi_DB
 ```
 
 La cadena de conexión del backend debe corresponder al servidor SQL Server utilizado en cada equipo.
+
+### Actualizar una base de datos creada antes de la versión 1.0.0
+
+Si la base `Tiendi_DB` se creó con una versión anterior del script, falta la columna `ImagenUrl` en la tabla `Productos`. Sin ella, los módulos de Inventario y Vender muestran el error `Invalid column name 'ImagenUrl'`.
+
+Para agregarla sin perder los datos, ejecutar en SQL Server Management Studio:
+
+```sql
+USE Tiendi_DB;
+ALTER TABLE Productos ADD ImagenUrl NVARCHAR(500) NULL;
+```
 
 ## Ejecución del backend
 
